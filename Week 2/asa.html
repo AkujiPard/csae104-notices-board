@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>JGMNHS - Campus Notices</title>
+ 
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+  <header>
+    <h1>CAMPUS NOTICES</h1>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#notices">Notices</a></li>
+        <li><a href="#deadlines">Deadlines</a></li>
+        <li><a href="#submit">Post a notice</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+        <section id="deadlines">
+      <h2>UPCOMING DEADLINES</h2>
+      <table>
+        <caption>Deadlines this Month</caption>
+        <thead>
+          <tr><th scope="col">Activity</th><th scope="col">Date</th></tr>
+        </thead>
+        <tbody>
+          <tr><td> Enrolment ends</td><td>20 January</td></tr>
+          <tr><td> Programming contest registration</td><td>25 January</td></tr>
+          <tr><td> Checking of Git Projects</td><td>17 November</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+    <section id="notices">
+      <h2>NOTICES</h2>
+
+      <article class="notice">
+        <h3>Library hours extended</h3>
+        <p class="meta">
+          <time datetime="2026-10-12">12 October 2026</time> · <span class="tag">Academic</span>
+        </p>
+        <p>The library stays open until 9 PM during midterm week.</p>
+      </article>
+
+      <article class="notice">
+        <h3>College of Computer Science to host the E-Games</h3>
+        <p class="meta">
+          <time datetime="2026-01-01">1 January 2026</time> · <span class="tag">Sports</span>
+        </p>
+        <p>Date of Registration: January 1,2026</p>
+      </article>
+
+      <article class="notice">
+        <h3>DMMMSU will shift to Asynchronous Learning Modality</h3>
+        <p class="meta">
+          <time datetime="2026-10-22">22 October 2026</time> · <span class="tag">Academic</span>
+        </p>
+        <p>Due to the Scheduled Power Interruption in Agoo, La Union, DMMMSU-SLUC will shift to ALM</p>
+      </article>
+    </section>
+
+
+    <section id="submit">
+      <h2>POST A NOTICE</h2>
+      <form action="#" method="post">
+        <p>
+          <label for="title">Title</label><br>
+          <input type="text" id="title" name="title" required maxlength="100">
+        </p>
+
+        <p>
+          <label for="category">Category</label><br>
+          <select id="category" name="category">
+            <option value="academic">Academic</option>
+            <option value="event">Event</option>
+            <option value="general">General</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="date">Date</label><br>
+          <input type="date" id="date" name="date">
+        </p>
+
+        <p>
+          <label for="message">Message</label><br>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </p>
+
+        <p>
+          <label for="email">Your email</label><br>
+          <input type="email" id="email" name="email" required>
+        </p>
+
+        <button type="submit">Post notice</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p> Juan G. Macaraeg National High School, Binalonan, Pangasinan</p>
+  </footer>
+
+</body>
+</html>
