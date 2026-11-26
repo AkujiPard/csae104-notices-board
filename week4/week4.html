@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Campus Notices</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="themeToggle" class="theme" type="button">Dark</button>
+
+    <!-- Splash Screen -->
+    <section id="splash" class="screen">
+        <h1 class="logo">Campus Notices</h1>
+        <div class="loader" aria-label="Loading"></div>
+    </section>
+
+    <!-- Registration Screen -->
+    <section id="register" class="screen hidden">
+        <form id="regForm" class="card">
+            <h2>Create account</h2>
+            <input name="name" placeholder="Name" autocomplete="name" required>
+            <input name="email" type="email" placeholder="Email" autocomplete="email" required>
+            <input name="password" type="password" placeholder="Password" autocomplete="new-password" required>
+            <input name="confirm" type="password" placeholder="Confirm password" autocomplete="new-password" required>
+            <button type="submit">Register</button>
+            <p id="regMsg" class="message" role="alert"></p>
+            <a href="#" id="toLogin">I have an account</a>
+        </form>
+    </section>
+
+    <!-- Login Screen -->
+    <section id="login" class="screen hidden">
+        <form id="logForm" class="card">
+            <h2>Log in</h2>
+            <input name="email" type="email" placeholder="Email" autocomplete="email" required>
+            <input name="password" type="password" placeholder="Password" autocomplete="current-password" required>
+            <button type="submit">Log in</button>
+            <p id="logMsg" class="message" role="alert"></p>
+            <a href="#" id="toRegister">Create an account</a>
+        </form>
+    </section>
+
+    <!-- Main Campus Notices Page (Shown After Login) -->
+    <section id="welcome" class="screen hidden">
+        <div class="container">
+
+            <div class="header">
+                <h2>UNIVERSITY OF BAGUIO</h2>
+                <p id="sentence1">University of Baguio</p>
+                <p id="welcomeText"></p>
+            </div>
+
+            <div class="menu">
+                <a href="index.html">Links</a><br>
+                <a href="#college">Home</a><br>
+                <a href="#faculty">About</a><br>
+                <a href="#post">Contact Number</a><br>
+                <a href="notices.html">Read Notices</a>
+                <button id="logout" type="button">Log out</button>
+                <button id="navRegister" type="button">Register</button>
+            </div>
+
+            <div class="content">
+
+                <section id="college">
+                    <h2>College of Computer Science</h2>
+
+                    <h3 id="faculty">Faculty Members</h3>
+
+                    <div class="faculty-container">
+
+                        <div class="faculty-list">
+                            <ol>
+                                <li>Haydee Limson</li>
+                                <li>Darwin Llavorre</li>
+                                <li>Enrique Abad</li>
+                                <li>Charlie Marzan</li>
+                                <li>Carlos Villanueva</li>
+                            </ol>
+
+                            <ul>
+                                <li>Haydee Limson</li>
+                                <li>Darwin Llavorre</li>
+                                <li>Enrique Abad</li>
+                                <li>Charlie Marzan</li>
+                                <li>Carlos Villanueva</li>
+                            </ul>
+                        </div>
+
+                        <img id="img1" src="ccs.jpg"
+                            alt="CCS BUILDING" width="500" height="400">
+
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="post-section" id="post">
+
+                <h3>Post Notice</h3>
+
+                <form action="/api/notices" method="post">
+
+                    <label for="title">Title</label>
+
+                    <input id="title" name="title"
+                        type="text" required>
+
+                    <label for="msg">Message</label>
+
+                    <textarea id="msg" name="message"></textarea>
+
+                    <button class="btn" type="submit">
+                        Post notice
+                    </button>
+
+                </form>
+
+            </div>
+
+            <div class="footer">
+                <h4 id="alert">@ DMMMSU 2026 | College Of Computer Science</h4>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const screens = document.querySelectorAll(".screen");
+
+        const show = (id) => {
+            screens.forEach((screen) => {
+                screen.classList.toggle("hidden", screen.id !== id);
+            });
+        };
+
+        const getUsers = () => {
+            const raw = localStorage.getItem("users");
+            return JSON.parse(raw) ?? [];
+        };
+
+        // Show the registration screen after the 2-second splash screen.
+        setTimeout(() => show("register"), 2000);
+
+        // Switch between screens using the links and log-out button.
+        document.addEventListener("click", (event) => {
+            const id = event.target.id;
+
+            if (id === "toLogin") {
+                event.preventDefault();
+                show("login");
+            }
+
+            if (id === "toRegister") {
+                event.preventDefault();
+                show("register");
+            }
+
+            if (id === "logout") {
+                show("login");
+            }
+        });
+
+        // Registration
+        const regForm = document.querySelector("#regForm");
+        const regMsg = document.querySelector("#regMsg");
+
+        regForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const form = regForm.elements;
+            regMsg.textContent = "";
+
+            try {
+                if (form.password.value.length < 8) {
+                    throw new Error("Password must be at least 8 characters");
+                }
+
+                if (form.password.value !== form.confirm.value) {
+                    throw new Error("Passwords do not match");
+                }
+
+                const email = form.email.value.trim().toLowerCase();
+
+                if (getUsers().some((user) => user.email === email)) {
+                    throw new Error("Email already used");
+                }
+
+                const users = [
+                    ...getUsers(),
+                    {
+                        name: form.name.value.trim(),
+                        email,
+                        password: form.password.value
+                    }
+                ];
+
+                localStorage.setItem("users", JSON.stringify(users));
+                regForm.reset();
+                show("login");
+            } catch (error) {
+                regMsg.textContent = error.message;
+            }
+        });
+
+        // Login
+        const logForm = document.querySelector("#logForm");
+        const logMsg = document.querySelector("#logMsg");
+        const welcomeText = document.querySelector("#welcomeText");
+
+        logForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const form = logForm.elements;
+            logMsg.textContent = "";
+
+            const email = form.email.value.trim().toLowerCase();
+            const user = getUsers().find((savedUser) => savedUser.email === email);
+
+            if (user?.password === form.password.value) {
+                welcomeText.textContent = `Welcome, ${user.name}!`;
+                logForm.reset();
+                show("welcome");
+            } else {
+                logMsg.textContent = "Wrong email or password";
+            }
+        });
+
+        // Light and dark mode
+        const root = document.documentElement;
+        const toggle = document.querySelector("#themeToggle");
+
+        const setTheme = (name) => {
+            const dark = name === "dark";
+            root.dataset.theme = name;
+            toggle.textContent = dark ? "Light" : "Dark";
+            localStorage.setItem("theme", name);
+        };
+
+        const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const savedTheme = localStorage.getItem("theme");
+
+        setTheme(savedTheme ?? (systemDark ? "dark" : "light"));
+
+        toggle.addEventListener("click", () => {
+            const dark = root.dataset.theme === "dark";
+            setTheme(dark ? "light" : "dark");
+        });
+    </script>
+</body>
+
+</html>
