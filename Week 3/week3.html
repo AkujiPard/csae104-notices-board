@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Campus Notices</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h2>UNIVERSITY OF BAGUIO</h2>
+            <p id="sentence1">
+                University of Baguio
+            </p>
+        </div>
+
+        <div class="menu">
+            <a href="index.html">Links</a><br>
+            <a href="#college">Home</a><br>
+            <a href="#faculty">About</a><br>
+            <a href="#post">Contact Number</a><br>
+            <a href="notices.html">Read Notices</a>
+        </div>
+
+        <div class="content">
+
+            <section id="college">
+                <h2>College of Computer Science</h2>
+
+                <h3 id="faculty">Faculty Members</h3>
+
+                <div class="faculty-container">
+
+                    <div class="faculty-list">
+                        <ol>
+                            <li>Haydee Limson</li>
+                            <li>Darwin Llavorre</li>
+                            <li>Enrique Abad</li>
+                            <li>Charlie Marzan</li>
+                            <li>Carlos Villanueva</li>
+                        </ol>
+
+                        <ul>
+                            <li>Haydee Limson</li>
+                            <li>Darwin Llavorre</li>
+                            <li>Enrique Abad</li>
+                            <li>Charlie Marzan</li>
+                            <li>Carlos Villanueva</li>
+                        </ul>
+                    </div>
+
+                    <img id="img1" src="ccs.jpg"
+                        alt="CCS BUILDING" width="500" height="400">
+
+                </div>
+            </section>
+
+        </div>
+
+        <div class="post-section" id="post">
+
+            <h3>Post Notice</h3>
+
+            <form action="/api/notices" method="post">
+
+                <label for="title">Title</label>
+
+                <input id="title" name="title"
+                    type="text" required>
+
+                <label for="msg">Message</label>
+
+                <textarea id="msg" name="mesage"></textarea>
+
+                <button class="btn" type="submit">
+                    Post notice
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="footer">
+            <h4 id="alert">@ DMMMSU 2026 |  College Of Computer Science</h4>
+        </div>
+    </div>
+</body>
+</html>
